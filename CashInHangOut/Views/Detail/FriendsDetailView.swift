@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct FriendsDetailView: View {
+    let friend: FriendModel
+    
     var body: some View {
-        Text("FriendsDetailView")
+        Text(friend.name)
     }
 }
 
 #Preview {
-    FriendsDetailView()
+    let friend: FriendModel = FriendModel(
+        id: .init(FriendModel.self),
+        name: "Gabriel",
+        debt: 10.0,
+        photo: nil
+    )
+    FriendsDetailView(friend: friend)
 }

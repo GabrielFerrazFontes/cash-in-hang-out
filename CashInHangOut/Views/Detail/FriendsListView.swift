@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct FriendsListView: View {
+    let viewModel: FriendsListViewModel
+    
     var body: some View {
-        Text("Friends List")
+        NavigationStack {
+            List(viewModel.fetchFriends()) { friend in
+                NavigationLink(value: friend) {
+                    Text(friend.name)
+                }
+            }
+            .navigationDestination(for: FriendModel.self) { friend in
+                FriendsDetailView(friend: friend)
+            }
+            
+        }
     }
 }
 
 #Preview {
-    FriendsListView()
+    let viewModel = FriendsListView.FriendsListViewModel()
+    FriendsListView(viewModel: viewModel)
 }

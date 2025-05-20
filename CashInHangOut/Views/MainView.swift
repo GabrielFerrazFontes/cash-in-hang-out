@@ -14,7 +14,7 @@ struct MainView: View {
                 .tabItem {
                     Label("History", systemImage: "clock.fill")
                 }
-            FriendsListView()
+            FriendsListView(viewModel: .init())
                 .tabItem {
                     Label("Friends", systemImage: "person.3.fill")
                 }
