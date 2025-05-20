@@ -27,5 +27,9 @@ extension FriendsListView {
                 return newFriend
             }
         }
+        
+        func createAddButtonAction() -> AddButtonView.AddButtonViewModel {
+            return .init()
+        }
     }
 }

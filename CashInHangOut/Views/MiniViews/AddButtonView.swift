@@ -17,15 +17,17 @@ struct AddButtonView: View {
     let viewModel: AddButtonViewModel
     
     var body: some View {
-        NavigationView {
-            NavigationLink(destination: createDestinationView(for: creationType)) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(.red)
-                        .frame(height: 50)
-                        .padding(.horizontal, 30)
-                    Text("New \(creationType == .newFriend ? "Friend" : "HangOut")")
-                        .foregroundStyle(.white)
+        ZStack {
+            NavigationView {
+                NavigationLink(destination: createDestinationView(for: creationType)) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(.red)
+                            .frame(height: 50)
+                            .padding(.horizontal, 30)
+                        Text("New \(creationType == .newFriend ? "Friend" : "HangOut")")
+                            .foregroundStyle(.white)
+                    }
                 }
             }
         }
