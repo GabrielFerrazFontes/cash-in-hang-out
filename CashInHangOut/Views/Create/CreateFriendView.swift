@@ -8,35 +8,31 @@
 import SwiftUI
 
 struct CreateFriendView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Friend.name, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Friend>
+    @Environment(\.dismiss) var dismiss
+    @State private var name: String = ""
     
+    let viewModel: CreateFriendViewModel
     let photoPickerViewModel: PhotoPicker.PhotoPickerViewModel
     
     var body: some View {
-        PhotoPicker(viewModel: photoPickerViewModel)
-        
-
-    }
-    
-    private func addFriend() {
-        let newFriend = Friend(context: viewContext)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Cant create a new friend (Show a popup)
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        Form {
+            PhotoPicker(viewModel: photoPickerViewModel)
+                .padding(.horizontal, 100)
+            TextField("Enter Friend Name", text: viewModel.$name)
+            Button("Create New Friend") {
+                viewModel.addFriend(photo: photoPickerViewModel.imageData)
+                dismiss()
+            }
         }
+        Spacer()
     }
 }
 
 #Preview {
+    let viewModel = CreateFriendView.CreateFriendViewModel()
     let photoPickerViewModel = PhotoPicker.PhotoPickerViewModel()
-    CreateFriendView(photoPickerViewModel: photoPickerViewModel)
+    CreateFriendView(
+        viewModel: viewModel,
+        photoPickerViewModel: photoPickerViewModel
+    )
 }

@@ -19,7 +19,7 @@ struct PhotoPicker: View {
                 PhotosPicker(selection: $viewModel.imageSelection, matching: .images, photoLibrary: .shared()) {
                     Image(systemName: "pencil.circle.fill")
                         .symbolRenderingMode(.multicolor)
-                        .font(.system(size: 30))
+                        .font(.system(size: 50))
                         .foregroundColor(.accentColor)
                 }
                 .buttonStyle(.borderless)
@@ -32,7 +32,7 @@ struct CircularProfileImage: View {
     
     var body: some View {
         ProfileImage(imageState: imageState)
-            .frame(width: 100, height: 100)
+            .frame(width: 200, height: 200)
             .clipShape(Circle())
             .background {
                 Circle().fill(LinearGradient(colors: [.blue, .red], startPoint: .top, endPoint: .bottom))
@@ -46,7 +46,7 @@ struct ProfileImage: View {
     var body: some View {
         switch imageState {
         case .success(let image):
-            image.resizable().scaledToFill().frame(width: 100, height: 100)
+            image.resizable().scaledToFill().frame(width: 200, height: 200)
         case .loading:
             ProgressView()
         case .empty:

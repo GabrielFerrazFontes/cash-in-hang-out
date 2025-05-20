@@ -15,6 +15,8 @@ extension PhotoPicker {
         }
         @Published private(set) var imageState: ImageState = .empty
         
+        private(set) var imageData: Data?
+        
         @Published var imageSelection: PhotosPickerItem? = nil {
             didSet {
                 if let imageSelection = imageSelection {
@@ -32,6 +34,7 @@ extension PhotoPicker {
                     guard imageSelection == self.imageSelection else { return }
                     switch result {
                     case .success(let image?):
+                        self.imageData = ImageRenderer(content: image).uiImage?.jpegData(compressionQuality: 1.0)
                         self.imageState = .success(image)
                     case .success(nil):
                         self.imageState = .empty
