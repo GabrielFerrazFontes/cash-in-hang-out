@@ -13,10 +13,10 @@ extension PhotoPicker {
         enum ImageState {
             case empty, loading(Progress), success(Image), failure(Error)
         }
-        @Published private(set) var imageState: ImageState = .empty
-        
+
         private(set) var imageData: Data?
-        
+
+        @Published private(set) var imageState: ImageState = .empty
         @Published var imageSelection: PhotosPickerItem? = nil {
             didSet {
                 if let imageSelection = imageSelection {
@@ -41,7 +41,6 @@ extension PhotoPicker {
                     switch result {
                     case .success(let image?):
                         self.imageData = ImageRenderer(content: image).uiImage?.jpegData(compressionQuality: 1.0)
-                        print("loadTransferable --- \(self.imageData)")
                         self.imageState = .success(image)
                     case .success(nil):
                         self.imageState = .empty
@@ -53,11 +52,8 @@ extension PhotoPicker {
         }
 
         func loadImage(data: Data?) {
-            print("loadImage --- \(data)")
             guard let imageData = data else { return }
-            print("imageData")
             guard let image = UIImage(data: imageData) else { return }
-            print("Image")
             self.imageState = .success(Image(uiImage: image))
         }
     }

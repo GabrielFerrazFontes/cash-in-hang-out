@@ -22,10 +22,8 @@ extension CreateFriendView {
             newFriend.name = name
             newFriend.debt = 0
             newFriend.photo = photo
-            print("addFriend --- \(photo)")
             do {
                 try viewContext.save()
-                print("New Friend Created")
             } catch {
                 // Cant create a new friend (Show a popup)
                 let nsError = error as NSError

@@ -11,11 +11,7 @@ import CoreData
 struct CreateFriendView: View {
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
-    @State private var selectedImageData: Data? {
-        didSet {
-            print("didSet --- \(selectedImageData)")
-        }
-    }
+    @State private var selectedImageData: Data?
     
     @EnvironmentObject var viewModel: CreateFriendViewModel
     
