@@ -8,28 +8,34 @@
 import SwiftUI
 
 struct FriendsListView: View {
-    let viewModel: FriendsListViewModel
+    @EnvironmentObject var viewModel: FriendsListViewModel
+
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Friend.name, ascending: true)],
+        animation: .default)
+    private var friends: FetchedResults<Friend>
     
     var body: some View {
         NavigationStack {
             VStack {
-                List(viewModel.fetchFriends()) { friend in
+                List(self.friends) { friend in
                     NavigationLink(value: friend) {
-                        Text(friend.name)
+                        FriendCellNormal(friend: friend)
+                            .environmentObject(viewModel.createCellViewModel())
                     }
-                    
                 }
-                .navigationDestination(for: FriendModel.self) { friend in
+                .listStyle(GroupedListStyle())
+                .navigationDestination(for: Friend.self) { friend in
                     FriendsDetailView(friend: friend)
+                        .environmentObject(viewModel.createDetailViewModel())
                 }
-                
-                AddButtonView(creationType: .newFriend, viewModel: viewModel.createAddButtonAction())
+                AddButtonView(creationType: .newFriend)
+                    .environmentObject(viewModel.createAddButtonAction())
             }
         }
     }
 }
 
 #Preview {
-    let viewModel = FriendsListView.FriendsListViewModel()
-    FriendsListView(viewModel: viewModel)
+    FriendsListView()
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddButtonView: View {
     enum CreationType {
@@ -14,7 +15,7 @@ struct AddButtonView: View {
     }
     
     @State var creationType: CreationType
-    let viewModel: AddButtonViewModel
+    @EnvironmentObject var viewModel: AddButtonViewModel
     
     var body: some View {
         ZStack {
@@ -45,13 +46,16 @@ struct AddButtonView: View {
 
 extension AddButtonView {
     class AddButtonViewModel: ObservableObject {
+        let viewContext: NSManagedObjectContext
+
+        init(viewContext: NSManagedObjectContext) {
+            self.viewContext = viewContext
+        }
+
         func createNewFriend() -> some View {
-            let viewModel = CreateFriendView.CreateFriendViewModel()
-            let photoPickerViewModel = PhotoPicker.PhotoPickerViewModel()
-            return CreateFriendView(
-                viewModel: viewModel,
-                photoPickerViewModel: photoPickerViewModel
-            )
+            let viewModel = CreateFriendView.CreateFriendViewModel(viewContext: viewContext)
+            return CreateFriendView()
+                .environmentObject(viewModel)
         }
         
         func createNewHangOut() -> some View {
@@ -61,6 +65,5 @@ extension AddButtonView {
 }
 
 #Preview {
-    let viewModel = AddButtonView.AddButtonViewModel()
-    AddButtonView(creationType: .newFriend, viewModel: viewModel)
+    AddButtonView(creationType: .newFriend)
 }

@@ -8,19 +8,24 @@
 import SwiftUI
 
 struct FriendsDetailView: View {
-    let friend: FriendModel
+    let friend: Friend
+    
+    @EnvironmentObject var viewModel: FriendsDetailViewModel
+    @State private var friendPhoto: Data?
     
     var body: some View {
-        Text(friend.name)
+        VStack {
+            PhotoPicker(imageData: $friendPhoto)
+                .padding(.horizontal, 100)
+                .environmentObject(viewModel.createPhotoPickerViewModel(imageData: friend.photo))
+            Text(friend.name ?? "Unknown")
+            Text("\(friend.debt, format: .currency(code: "BRL"))")
+                .foregroundStyle(viewModel.colorType(value: friend.debt))
+        }
     }
 }
 
 #Preview {
-    let friend: FriendModel = FriendModel(
-        id: .init(FriendModel.self),
-        name: "Gabriel",
-        debt: 10.0,
-        photo: nil
-    )
+    let friend: Friend = Friend.example
     FriendsDetailView(friend: friend)
 }

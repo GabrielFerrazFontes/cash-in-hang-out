@@ -6,25 +6,23 @@
 //
 
 import SwiftUI
+import CoreData
 
 extension CreateFriendView {
     class CreateFriendViewModel: ObservableObject {
         
-        @State var name: String = ""
+        let viewContext: NSManagedObjectContext
         
-        // Core Data
-        @Environment(\.managedObjectContext) private var viewContext
-        @FetchRequest(
-            sortDescriptors: [NSSortDescriptor(keyPath: \Friend.name, ascending: true)],
-            animation: .default)
-        private var friends: FetchedResults<Friend>
+        init (viewContext: NSManagedObjectContext) {
+            self.viewContext = viewContext
+        }
         
-        func addFriend(photo: Data?) {
+        func addFriend(name: String, photo: Data?) {
             let newFriend = Friend(context: viewContext)
             newFriend.name = name
             newFriend.debt = 0
             newFriend.photo = photo
-            
+            print("addFriend --- \(photo)")
             do {
                 try viewContext.save()
                 print("New Friend Created")
@@ -33,6 +31,10 @@ extension CreateFriendView {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
+        }
+        
+        func createPhotoPickerViewModel(imageData: Data?) -> PhotoPicker.PhotoPickerViewModel {
+            PhotoPicker.PhotoPickerViewModel(imageData: imageData)
         }
     }
 }

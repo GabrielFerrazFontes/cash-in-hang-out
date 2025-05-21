@@ -10,8 +10,8 @@ import PhotosUI
 
 struct PhotoPicker: View {
     
-    @ObservedObject var viewModel: PhotoPickerViewModel
-    @State var selectedPhoto: PhotosPickerItem?
+    @EnvironmentObject var viewModel: PhotoPickerViewModel
+    @Binding var imageData: Data?
     
     var body: some View {
         CircularProfileImage(imageState: viewModel.imageState)
@@ -23,6 +23,9 @@ struct PhotoPicker: View {
                         .foregroundColor(.accentColor)
                 }
                 .buttonStyle(.borderless)
+            }.onChange(of: viewModel.imageData) { _, newValue in
+                guard let newValue else { return }
+                self.imageData = newValue
             }
     }
 }
@@ -62,5 +65,6 @@ struct ProfileImage: View {
 }
 
 #Preview {
-    PhotoPicker(viewModel: PhotoPicker.PhotoPickerViewModel())
+    PhotoPicker(imageData: .constant(nil))
+        .environmentObject(PhotoPicker.PhotoPickerViewModel())
 }

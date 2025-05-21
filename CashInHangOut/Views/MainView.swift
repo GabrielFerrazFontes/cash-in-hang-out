@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(\.managedObjectContext) var viewContext
+
     var body: some View {
         TabView {
             HangOutsListView()
                 .tabItem {
                     Label("History", systemImage: "clock.fill")
                 }
-            FriendsListView(viewModel: .init())
+            FriendsListView()
                 .tabItem {
                     Label("Friends", systemImage: "person.3.fill")
                 }
+                .environmentObject(FriendsListView.FriendsListViewModel(viewContext: viewContext))
             CreateHangView()
                 .tabItem {
                     Label("Create", systemImage: "plus.circle.fill")

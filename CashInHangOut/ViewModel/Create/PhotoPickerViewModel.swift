@@ -28,6 +28,12 @@ extension PhotoPicker {
             }
         }
         
+        init(imageData: Data?) {
+            loadImage(data: imageData)
+        }
+
+        init() { }
+
         func loadTransferable(from imageSelection: PhotosPickerItem) -> Progress {
             return imageSelection.loadTransferable(type: Image.self) { result in
                 DispatchQueue.main.async {
@@ -35,6 +41,7 @@ extension PhotoPicker {
                     switch result {
                     case .success(let image?):
                         self.imageData = ImageRenderer(content: image).uiImage?.jpegData(compressionQuality: 1.0)
+                        print("loadTransferable --- \(self.imageData)")
                         self.imageState = .success(image)
                     case .success(nil):
                         self.imageState = .empty
@@ -43,6 +50,15 @@ extension PhotoPicker {
                     }
                 }
             }
+        }
+
+        func loadImage(data: Data?) {
+            print("loadImage --- \(data)")
+            guard let imageData = data else { return }
+            print("imageData")
+            guard let image = UIImage(data: imageData) else { return }
+            print("Image")
+            self.imageState = .success(Image(uiImage: image))
         }
     }
 }
