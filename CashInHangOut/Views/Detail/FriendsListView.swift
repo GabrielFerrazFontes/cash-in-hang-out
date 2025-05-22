@@ -18,17 +18,19 @@ struct FriendsListView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                List(self.friends) { friend in
-                    NavigationLink(value: friend) {
-                        FriendCellNormal(friend: friend)
-                            .environmentObject(viewModel.createCellViewModel())
+                List {
+                    ForEach(friends) { friend in
+                        NavigationLink {
+                            FriendsDetailView(friend: friend)
+                                .environmentObject(viewModel.createDetailViewModel())
+                        } label: {
+                            FriendCellNormal(friend: friend)
+                                .environmentObject(viewModel.createCellViewModel())
+                        }
                     }
+                    .onDelete(perform: viewModel.removeFriends)
                 }
                 .listStyle(GroupedListStyle())
-                .navigationDestination(for: Friend.self) { friend in
-                    FriendsDetailView(friend: friend)
-                        .environmentObject(viewModel.createDetailViewModel())
-                }
                 AddButtonView(creationType: .newFriend)
                     .environmentObject(viewModel.createAddButtonAction())
             }
