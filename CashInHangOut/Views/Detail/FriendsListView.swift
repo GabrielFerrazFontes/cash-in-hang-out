@@ -24,8 +24,8 @@ struct FriendsListView: View {
                             FriendsDetailView(friend: friend)
                                 .environmentObject(viewModel.createDetailViewModel())
                         } label: {
-                            FriendCellNormal(friend: friend)
-                                .environmentObject(viewModel.createCellViewModel())
+                            FriendCellNormal()
+                                .environmentObject(viewModel.createCellViewModel(friend: friend))
                         }
                     }
                     .onDelete(perform: viewModel.removeFriends)

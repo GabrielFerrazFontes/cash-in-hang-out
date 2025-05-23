@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FriendCellNormal: View {
-    let friend: FetchedResults<Friend>.Element
     @EnvironmentObject var viewModel: FriendCellNormalViewModel
     
     var body: some View {
@@ -17,33 +16,39 @@ struct FriendCellNormal: View {
                 .foregroundColor(.blue)
                 .frame(width: 32, height: 32)
                 .padding(.horizontal)
-            Text(friend.name ?? "Unkonwn")
+            Text(viewModel.friend.name ?? "Unkonwn")
             Spacer()
-            Label("\(friend.debt, format: .currency(code: "BRL"))", systemImage: viewModel.iconType(value: friend.debt))
+            Label("\(viewModel.friend.debt, format: .currency(code: "BRL"))", systemImage: viewModel.iconType())
                 .padding(.trailing)
-                .foregroundStyle(viewModel.colorType(value: friend.debt))
+                .foregroundStyle(viewModel.colorType())
         }
     }
 }
 
 extension FriendCellNormal {
     class FriendCellNormalViewModel: ObservableObject {
-        func iconType(value: Float) -> String {
-            switch value {
-            case _ where value > 0:
+        let friend: FetchedResults<Friend>.Element
+
+        init(friend: FetchedResults<Friend>.Element) {
+            self.friend = friend
+        }
+        
+        func iconType() -> String {
+            switch friend.debt {
+            case _ where friend.debt > 0:
                 "multiply.circle.fill"
-            case _ where value < 0:
+            case _ where friend.debt < 0:
                 "plus.circle.fill"
             default:
                 "minus.circle.fill"
             }
         }
         
-        func colorType(value: Float) -> Color {
-            switch value {
-            case _ where value > 0:
+        func colorType() -> Color {
+            switch friend.debt {
+            case _ where friend.debt > 0:
                 .red
-            case _ where value < 0:
+            case _ where friend.debt < 0:
                 .green
             default:
                 .black
@@ -54,8 +59,8 @@ extension FriendCellNormal {
 
 #Preview {
     let friend = Friend.example
-    let viewModel = FriendCellNormal.FriendCellNormalViewModel()
-    FriendCellNormal(friend: friend)
+    let viewModel = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
+    FriendCellNormal()
         .environmentObject(viewModel)
 }
 

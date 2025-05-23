@@ -42,8 +42,8 @@ extension FriendsListView {
             return .init(viewContext: viewContext)
         }
         
-        func createCellViewModel() -> FriendCellNormal.FriendCellNormalViewModel {
-            return .init()
+        func createCellViewModel(friend: FetchedResults<Friend>.Element) -> FriendCellNormal.FriendCellNormalViewModel {
+            return .init(friend: friend)
         }
         
         func createDetailViewModel() -> FriendsDetailView.FriendsDetailViewModel {
