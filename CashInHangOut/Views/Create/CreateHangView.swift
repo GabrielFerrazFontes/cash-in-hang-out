@@ -12,7 +12,10 @@ struct CreateHangView: View {
         NavigationView {
             VStack {
                 Spacer()
-                NavigationLink(destination: CreateEqualPriceView()) {
+                NavigationLink {
+                    CreateEqualPriceView()
+                        .environmentObject(CreateEqualPriceView.CreateEqualPriceViewModel())
+                } label: {
                     Text("Dividir Igual")
                 }
                 Spacer()
