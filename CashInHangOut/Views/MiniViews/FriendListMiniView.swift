@@ -25,10 +25,7 @@ struct FriendListMiniView: View {
             }
             .environment(\.editMode, .constant(viewModel.returnEditMode()))
             .toolbar {
-                Button("Done") {
-                    viewModel.updateAction(selectedFriends.map { $0 })
-                    dismiss()
-                }
+                createToolbarButton()
             }
             .onAppear {
                 viewModel.updateFriendList(friends)
@@ -40,10 +37,23 @@ struct FriendListMiniView: View {
         switch viewModel.type {
         case .editableFriend:
             Text("in production")
-        case .selectFriends, .simpleFriend:
+        case .selectFriends:
             let viewModel = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
-            FriendCellNormal()
+            FriendCellNormal(showMoneyLabel: true)
                 .environmentObject(viewModel)
+        case .simpleFriend:
+            let viewModel = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
+            FriendCellNormal(showMoneyLabel: false)
+                .environmentObject(viewModel)
+        }
+    }
+    
+    @ViewBuilder func createToolbarButton() -> some View {
+        if viewModel.type == .selectFriends {
+            Button("Done") {
+                viewModel.updateAction(selectedFriends.map { $0 })
+                dismiss()
+            }
         }
     }
 }

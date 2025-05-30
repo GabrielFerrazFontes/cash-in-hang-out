@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct CreateEqualPriceView: View {
-    @ObservedObject private var totalValue = NumbersOnly()
     @EnvironmentObject var viewModel: CreateEqualPriceViewModel
-    
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         VStack {
-            TextField("Total Price", text: $totalValue.value)
+            TextField("Total Price", text: $viewModel.totalValue.value)
                 .keyboardType(.decimalPad)
+                .disabled(viewModel.isDisabledTextField)
+            Text("Each Person: \(viewModel.valueDivided, format: .currency(code: "BRL"))")
             FriendListMiniView()
                 .environmentObject(viewModel.returnFriendListViewModel(.simpleFriend))
             NavigationLink {
@@ -23,7 +25,12 @@ struct CreateEqualPriceView: View {
             } label: {
                 Text("Add Friends")
             }
-
+            Button {
+                viewModel.addHangOut()
+                dismiss()
+            } label: {
+                Text("Create HangOut")
+            }
         }
     }
 }

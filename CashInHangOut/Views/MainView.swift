@@ -25,6 +25,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Create", systemImage: "plus.circle.fill")
                 }
+                .environmentObject(CreateHangView.CreateHangViewModel(viewContext: viewContext))
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")

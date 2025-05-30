@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FriendCellNormal: View {
     @EnvironmentObject var viewModel: FriendCellNormalViewModel
+    let showMoneyLabel: Bool
     
     var body: some View {
         HStack {
@@ -18,6 +19,12 @@ struct FriendCellNormal: View {
                 .padding(.horizontal)
             Text(viewModel.friend.name ?? "Unkonwn")
             Spacer()
+            moneyLabel()
+        }
+    }
+    
+    @ViewBuilder func moneyLabel() -> some View {
+        if showMoneyLabel {
             Label("\(viewModel.friend.debt, format: .currency(code: "BRL"))", systemImage: viewModel.iconType())
                 .padding(.trailing)
                 .foregroundStyle(viewModel.colorType())
@@ -60,7 +67,7 @@ extension FriendCellNormal {
 #Preview {
     let friend = Friend.example
     let viewModel = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
-    FriendCellNormal()
+    FriendCellNormal(showMoneyLabel: true)
         .environmentObject(viewModel)
 }
 

@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct CreateHangView: View {
+    @EnvironmentObject var viewModel: CreateHangViewModel
+    
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
                 NavigationLink {
                     CreateEqualPriceView()
-                        .environmentObject(CreateEqualPriceView.CreateEqualPriceViewModel())
+                        .environmentObject(viewModel.createEqualPriceViewModel())
                 } label: {
                     Text("Dividir Igual")
                 }

@@ -24,7 +24,7 @@ struct FriendsListView: View {
                             FriendsDetailView(friend: friend)
                                 .environmentObject(viewModel.createDetailViewModel())
                         } label: {
-                            FriendCellNormal()
+                            FriendCellNormal(showMoneyLabel: true)
                                 .environmentObject(viewModel.createCellViewModel(friend: friend))
                         }
                     }
