@@ -70,12 +70,3 @@ extension FriendCellNormal {
     FriendCellNormal(showMoneyLabel: true)
         .environmentObject(viewModel)
 }
-
-extension Friend {
-    static let example: Friend = {
-        let friend = Friend()
-        friend.name = "Gabriel"
-        friend.debt = 1000
-        return friend
-    }()
-}
