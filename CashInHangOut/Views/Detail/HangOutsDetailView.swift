@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct HangOutsDetailView: View {
+    @EnvironmentObject var viewModel: HangOutsDetailViewModel
+
     var body: some View {
-        Text("Hang out detail")
+        VStack {
+            Text(viewModel.date)
+            Text(viewModel.totalValue)
+            List {
+                ForEach(viewModel.friendList) { friend in
+                    FriendCellNormal(showMoneyLabel: true)
+                        .environmentObject(viewModel.createFriendCellViewModel(friend: friend))
+                }
+            }
+        }
     }
 }
 

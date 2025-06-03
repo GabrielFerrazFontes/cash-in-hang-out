@@ -16,6 +16,7 @@ struct MainView: View {
                 .tabItem {
                     Label("History", systemImage: "clock.fill")
                 }
+                .environmentObject(HangOutsListView.HangOutsListViewModel())
             FriendsListView()
                 .tabItem {
                     Label("Friends", systemImage: "person.3.fill")

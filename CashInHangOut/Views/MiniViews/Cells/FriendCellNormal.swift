@@ -25,7 +25,7 @@ struct FriendCellNormal: View {
     
     @ViewBuilder func moneyLabel() -> some View {
         if showMoneyLabel {
-            Label("\(viewModel.friend.debt, format: .currency(code: "BRL"))", systemImage: viewModel.iconType())
+            Label(viewModel.moneyLabel(), systemImage: viewModel.iconType())
                 .padding(.trailing)
                 .foregroundStyle(viewModel.colorType())
         }
@@ -35,9 +35,11 @@ struct FriendCellNormal: View {
 extension FriendCellNormal {
     class FriendCellNormalViewModel: ObservableObject {
         let friend: FetchedResults<Friend>.Element
+        var moneyDebt: Float?
 
-        init(friend: FetchedResults<Friend>.Element) {
+        init(friend: FetchedResults<Friend>.Element, moneyDebt: Float? = nil) {
             self.friend = friend
+            self.moneyDebt = moneyDebt
         }
         
         func iconType() -> String {
@@ -60,6 +62,15 @@ extension FriendCellNormal {
             default:
                 .black
             }
+        }
+
+        func moneyLabel() -> String {
+            let debt = moneyDebt ?? friend.debt
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.current
+            formatter.numberStyle = .currency
+            guard let string = formatter.string(from: NSNumber(value: debt)) else { return "Error" }
+            return string
         }
     }
 }
