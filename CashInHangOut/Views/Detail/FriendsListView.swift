@@ -14,15 +14,15 @@ struct FriendsListView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Friend.name, ascending: true)],
         animation: .default)
     private var friends: FetchedResults<Friend>
-    
+
     var body: some View {
         NavigationStack {
             VStack {
                 List {
                     ForEach(friends) { friend in
                         NavigationLink {
-                            FriendsDetailView(friend: friend)
-                                .environmentObject(viewModel.createDetailViewModel())
+                            FriendsDetailView()
+                                .environmentObject(viewModel.createDetailViewModel(friend: friend))
                         } label: {
                             FriendCellNormal(showMoneyLabel: true)
                                 .environmentObject(viewModel.createCellViewModel(friend: friend))

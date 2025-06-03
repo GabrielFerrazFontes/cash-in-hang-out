@@ -11,15 +11,9 @@ extension HangOutsDetailView {
     class HangOutsDetailViewModel: ObservableObject {
         private let hangOut: HangOut
 
-        public var totalValue: String {
-            return hangOut.valueToString()
-        }
-        public var date: String {
-            return hangOut.date?.formatted() ?? "N/A"
-        }
-        public var friendList: [Friend] {
-            return hangOut.friendsList()
-        }
+        public var totalValue: String { hangOut.valueToString() }
+        public var date: String { hangOut.date?.formatted() ?? "N/A" }
+        public var friendList: [Friend] { hangOut.friendsList() }
 
         init(hangOut: HangOut) {
             self.hangOut = hangOut

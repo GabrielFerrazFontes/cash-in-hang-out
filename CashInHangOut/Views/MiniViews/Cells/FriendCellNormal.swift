@@ -10,19 +10,19 @@ import SwiftUI
 struct FriendCellNormal: View {
     @EnvironmentObject var viewModel: FriendCellNormalViewModel
     let showMoneyLabel: Bool
-    
+
     var body: some View {
         HStack {
             Image(systemName: "person.circle")
                 .foregroundColor(.blue)
                 .frame(width: 32, height: 32)
                 .padding(.horizontal)
-            Text(viewModel.friend.name ?? "Unkonwn")
+            Text(viewModel.friendName)
             Spacer()
             moneyLabel()
         }
     }
-    
+
     @ViewBuilder func moneyLabel() -> some View {
         if showMoneyLabel {
             Label(viewModel.moneyLabel(), systemImage: viewModel.iconType())
@@ -34,14 +34,16 @@ struct FriendCellNormal: View {
 
 extension FriendCellNormal {
     class FriendCellNormalViewModel: ObservableObject {
-        let friend: FetchedResults<Friend>.Element
-        var moneyDebt: Float?
+        private let friend: FetchedResults<Friend>.Element
+        private var moneyDebt: Float?
+
+        public var friendName: String { friend.name ?? "Unkonwn" }
 
         init(friend: FetchedResults<Friend>.Element, moneyDebt: Float? = nil) {
             self.friend = friend
             self.moneyDebt = moneyDebt
         }
-        
+
         func iconType() -> String {
             switch friend.debt {
             case _ where friend.debt > 0:
@@ -52,7 +54,7 @@ extension FriendCellNormal {
                 "minus.circle.fill"
             }
         }
-        
+
         func colorType() -> Color {
             switch friend.debt {
             case _ where friend.debt > 0:

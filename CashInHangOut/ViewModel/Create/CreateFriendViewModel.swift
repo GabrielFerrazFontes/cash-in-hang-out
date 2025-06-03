@@ -10,13 +10,13 @@ import CoreData
 
 extension CreateFriendView {
     class CreateFriendViewModel: ObservableObject {
-        
-        let viewContext: NSManagedObjectContext
-        
+
+        private let viewContext: NSManagedObjectContext
+
         init (viewContext: NSManagedObjectContext) {
             self.viewContext = viewContext
         }
-        
+
         func addFriend(name: String, photo: Data?) {
             let newFriend = Friend(context: viewContext)
             newFriend.name = name
@@ -30,7 +30,7 @@ extension CreateFriendView {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
-        
+
         func createPhotoPickerViewModel(imageData: Data?) -> PhotoPicker.PhotoPickerViewModel {
             PhotoPicker.PhotoPickerViewModel(imageData: imageData)
         }

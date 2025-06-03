@@ -10,11 +10,11 @@ import CoreData
 
 extension CreateEqualPriceView {
     class CreateEqualPriceViewModel: ObservableObject {
-        let viewContext: NSManagedObjectContext
-        let listViewModel = FriendListMiniView.FriendListMiniViewModel(type: .simpleFriend)
-        let listSelectViewModel = FriendListMiniView.FriendListMiniViewModel(type: .selectFriends)
-        var selectedFriends: [Friend] = []
-        
+        private let viewContext: NSManagedObjectContext
+        private let listViewModel = FriendListMiniView.FriendListMiniViewModel(type: .simpleFriend)
+        private let listSelectViewModel = FriendListMiniView.FriendListMiniViewModel(type: .selectFriends)
+        private var selectedFriends: [Friend] = []
+
         @Published var isDisabledTextField: Bool = true
         @Published var valueDivided: Float = 0.0
         @Published var totalValue: NumbersOnly = NumbersOnly() {
@@ -23,7 +23,7 @@ extension CreateEqualPriceView {
                 valueDivided = (value ?? 0.0) / Float(selectedFriends.count)
             }
         }
-        
+
         init (viewContext: NSManagedObjectContext) {
             self.viewContext = viewContext
         }
@@ -33,13 +33,13 @@ extension CreateEqualPriceView {
             selectedFriends = selection
             listViewModel.updateFriendList(selection)
         }
-        
+
         func returnFriendListViewModel(_ type: FriendListMiniView.FriendListMiniType) -> FriendListMiniView.FriendListMiniViewModel {
             listSelectViewModel.updateAction = updateSelection(_:)
             if type == .selectFriends { return listSelectViewModel }
             return listViewModel
         }
-        
+
         func addHangOut() {
             let newHangOut = HangOut(context: viewContext)
             newHangOut.date = Date()

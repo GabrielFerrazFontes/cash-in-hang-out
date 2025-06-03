@@ -13,23 +13,22 @@ extension FriendListMiniView {
         case editableFriend
         case selectFriends
     }
-    
+
     class FriendListMiniViewModel: ObservableObject {
-        var type: FriendListMiniType
-        var selectionFriends: [Friend]? = [Friend]()
+        let type: FriendListMiniType
         @Published var allFriends = [Friend]()
         var updateAction: (_ friends: [Friend]) -> Void = { _ in }
-        
+
         init(type: FriendListMiniType) {
             self.type = type
         }
-        
+
         func updateFriendList(_ friends: FetchedResults<Friend>) {
             let friendList = friends.map { $0 }
             if type == .simpleFriend { return }
             updateFriendList(friendList)
         }
-        
+
         func updateFriendList(_ friends: [Friend]) {
             switch type {
             case .editableFriend:
@@ -40,7 +39,7 @@ extension FriendListMiniView {
                 allFriends = friends
             }
         }
-        
+
         func returnEditMode() -> EditMode {
             switch type {
             case .editableFriend, .selectFriends:

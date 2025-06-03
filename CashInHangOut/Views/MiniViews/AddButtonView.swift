@@ -13,10 +13,10 @@ struct AddButtonView: View {
         case newFriend
         case newHangOut
     }
-    
+
     @State var creationType: CreationType
     @EnvironmentObject var viewModel: AddButtonViewModel
-    
+
     var body: some View {
         ZStack {
             NavigationView {
@@ -33,7 +33,7 @@ struct AddButtonView: View {
             }
         }
     }
-    
+
     @ViewBuilder func createDestinationView(for creationType: CreationType) -> some View {
         switch creationType {
         case .newFriend:
@@ -57,7 +57,7 @@ extension AddButtonView {
             return CreateFriendView()
                 .environmentObject(viewModel)
         }
-        
+
         func createNewHangOut() -> some View {
             return CreateHangView()
         }

@@ -21,7 +21,6 @@ struct FriendListMiniView: View {
         NavigationStack {
             List(viewModel.allFriends, id: \.self, selection: $selectedFriends) { friend in
                 createCell(friend: friend)
-                    .environmentObject(viewModel)
             }
             .environment(\.editMode, .constant(viewModel.returnEditMode()))
             .toolbar {
@@ -32,22 +31,22 @@ struct FriendListMiniView: View {
             }
         }
     }
-    
+
     @ViewBuilder func createCell(friend: Friend) -> some View {
         switch viewModel.type {
         case .editableFriend:
             Text("in production")
         case .selectFriends:
-            let viewModel = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
+            let viewModelCell = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
             FriendCellNormal(showMoneyLabel: true)
-                .environmentObject(viewModel)
+                .environmentObject(viewModelCell)
         case .simpleFriend:
-            let viewModel = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
+            let viewModelCell = FriendCellNormal.FriendCellNormalViewModel(friend: friend)
             FriendCellNormal(showMoneyLabel: false)
-                .environmentObject(viewModel)
+                .environmentObject(viewModelCell)
         }
     }
-    
+
     @ViewBuilder func createToolbarButton() -> some View {
         if viewModel.type == .selectFriends {
             Button("Done") {

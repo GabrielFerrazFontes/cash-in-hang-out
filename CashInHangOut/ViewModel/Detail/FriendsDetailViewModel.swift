@@ -9,18 +9,29 @@ import SwiftUI
 
 extension FriendsDetailView {
     class FriendsDetailViewModel: ObservableObject {
-        func createPhotoPickerViewModel(imageData: Data?) -> PhotoPicker.PhotoPickerViewModel {
-            PhotoPicker.PhotoPickerViewModel(imageData: imageData)
+        private let friend: Friend
+
+        public var friendPhoto: Data? { friend.photo }
+        public var friendName: String { friend.name ?? "Unknown" }
+        public var friendDebt: String { friend.valueToString() }
+
+        init(friend: Friend) {
+            self.friend = friend
         }
 
-        func colorType(value: Float) -> Color {
+        func createPhotoPickerViewModel() -> PhotoPicker.PhotoPickerViewModel {
+            PhotoPicker.PhotoPickerViewModel(imageData: friend.photo)
+        }
+
+        func colorType() -> Color {
+            let value = friend.debt
             switch value {
             case _ where value > 0:
-                .red
+                return .red
             case _ where value < 0:
-                .green
+                return .green
             default:
-                .black
+                return .black
             }
         }
     }

@@ -27,7 +27,7 @@ extension PhotoPicker {
                 }
             }
         }
-        
+
         init(imageData: Data?) {
             loadImage(data: imageData)
         }

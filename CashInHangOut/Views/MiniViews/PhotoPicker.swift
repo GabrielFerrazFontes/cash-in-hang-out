@@ -9,10 +9,10 @@ import SwiftUI
 import PhotosUI
 
 struct PhotoPicker: View {
-    
+
     @EnvironmentObject var viewModel: PhotoPickerViewModel
     @Binding var imageData: Data?
-    
+
     var body: some View {
         CircularProfileImage(imageState: viewModel.imageState)
             .overlay(alignment: .bottomTrailing) {
@@ -32,7 +32,7 @@ struct PhotoPicker: View {
 
 struct CircularProfileImage: View {
     let imageState: PhotoPicker.PhotoPickerViewModel.ImageState
-    
+
     var body: some View {
         ProfileImage(imageState: imageState)
             .frame(width: 200, height: 200)
@@ -45,7 +45,7 @@ struct CircularProfileImage: View {
 
 struct ProfileImage: View {
     let imageState: PhotoPicker.PhotoPickerViewModel.ImageState
-    
+
     var body: some View {
         switch imageState {
         case .success(let image):
