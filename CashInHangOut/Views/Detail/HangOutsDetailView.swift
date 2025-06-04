@@ -9,15 +9,20 @@ import SwiftUI
 
 struct HangOutsDetailView: View {
     @EnvironmentObject var viewModel: HangOutsDetailViewModel
+    @State var selectedFriends = Set<Friend>()
 
     var body: some View {
         VStack {
             Text(viewModel.date)
             Text(viewModel.totalValue)
-            List {
-                ForEach(viewModel.friendList) { friend in
-                    FriendCellNormal(showMoneyLabel: true)
-                        .environmentObject(viewModel.createFriendCellViewModel(friend: friend))
+            List(viewModel.friendList, id: \.self, selection: $selectedFriends) { friend in
+                FriendCellNormal(showMoneyLabel: true)
+                    .environmentObject(viewModel.createFriendCellViewModel(friend: friend))
+            }
+            .environment(\.editMode, .constant(.active))
+            .toolbar {
+                Button("Pay") {
+                    viewModel.payFriendSelection(selectedFriends)
                 }
             }
         }
