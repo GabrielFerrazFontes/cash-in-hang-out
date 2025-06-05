@@ -47,7 +47,7 @@ extension FriendsListView {
         }
 
         func createDetailViewModel(friend: Friend) -> FriendsDetailView.FriendsDetailViewModel {
-            return .init(friend: friend)
+            return .init(friend: friend, viewContext: viewContext)
         }
     }
 }

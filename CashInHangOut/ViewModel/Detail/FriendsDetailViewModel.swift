@@ -6,21 +6,33 @@
 //
 
 import SwiftUI
+import CoreData
 
 extension FriendsDetailView {
     class FriendsDetailViewModel: ObservableObject {
+        private let viewContext: NSManagedObjectContext
         private let friend: Friend
 
         public var friendPhoto: Data? { friend.photo }
         public var friendName: String { friend.name ?? "Unknown" }
         public var friendDebt: String { friend.valueToString() }
+        public var hangOutList: [HangOut] { friend.hangOutsList() }
 
-        init(friend: Friend) {
+        init(friend: Friend, viewContext: NSManagedObjectContext) {
             self.friend = friend
+            self.viewContext = viewContext
         }
 
         func createPhotoPickerViewModel() -> PhotoPicker.PhotoPickerViewModel {
-            PhotoPicker.PhotoPickerViewModel(imageData: friend.photo)
+            .init(imageData: friend.photo)
+        }
+
+        func createHangOutViewModel(_ hangOut: HangOut) -> HangOutCellNormal.HangOutCellNormalViewModel {
+            .init(hangOut: hangOut)
+        }
+
+        func createHangOutDetailViewModel(_ hangOut: HangOut) -> HangOutsDetailView.HangOutsDetailViewModel {
+            .init(hangOut: hangOut, viewContext: viewContext)
         }
 
         func colorType() -> Color {

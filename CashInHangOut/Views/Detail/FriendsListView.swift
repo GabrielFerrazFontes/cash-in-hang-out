@@ -19,25 +19,34 @@ struct FriendsListView: View {
         NavigationStack {
             VStack {
                 List {
-                    ForEach(friends) { friend in
-                        NavigationLink {
-                            FriendsDetailView()
-                                .environmentObject(viewModel.createDetailViewModel(friend: friend))
-                        } label: {
-                            FriendCellNormal(showMoneyLabel: true)
-                                .environmentObject(viewModel.createCellViewModel(friend: friend))
+                    Section(header: Text("Friends")) {
+                        ForEach(friends) { friend in
+                            NavigationLink {
+                                FriendsDetailView()
+                                    .environmentObject(viewModel.createDetailViewModel(friend: friend))
+                            } label: {
+                                FriendCellNormal(showMoneyLabel: true)
+                                    .environmentObject(viewModel.createCellViewModel(friend: friend))
+                            }
                         }
+                        .onDelete(perform: viewModel.removeFriends)
                     }
-                    .onDelete(perform: viewModel.removeFriends)
+                    .headerProminence(.increased)
                 }
                 .listStyle(GroupedListStyle())
+                .padding(.top)
+                .frame(height: UIScreen.main.bounds.height * 0.75)
                 AddButtonView(creationType: .newFriend)
                     .environmentObject(viewModel.createAddButtonAction())
+                    .padding(.horizontal)
             }
         }
     }
 }
 
 #Preview {
+    let viewContext = PersistenceController.shared.container.viewContext
+    let viewModel = FriendsListView.FriendsListViewModel(viewContext: viewContext)
     FriendsListView()
+        .environmentObject(viewModel)
 }
