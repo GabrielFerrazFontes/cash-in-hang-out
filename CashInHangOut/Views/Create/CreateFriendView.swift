@@ -21,9 +21,11 @@ struct CreateFriendView: View {
                 .padding(.horizontal, 100)
                 .environmentObject(viewModel.createPhotoPickerViewModel(imageData: selectedImageData))
             TextField("Enter Friend Name", text: $name)
-            Button("Create New Friend") {
+            Button {
                 viewModel.addFriend(name: name, photo: selectedImageData)
                 dismiss()
+            } label : {
+                ButtonLayoutView(text: "Create New Friend")
             }
         }
         Spacer()

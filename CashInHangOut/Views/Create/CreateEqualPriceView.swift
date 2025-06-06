@@ -16,21 +16,27 @@ struct CreateEqualPriceView: View {
             TextField("Total Price", text: $viewModel.totalValue.value)
                 .keyboardType(.decimalPad)
                 .disabled(viewModel.isDisabledTextField)
+                .padding([.horizontal, .top])
+                .font(.title2)
             Text("Each Person: \(viewModel.valueDivided, format: .currency(code: "BRL"))")
+                .padding([.horizontal, .top])
+                .font(.title2)
             FriendListMiniView()
                 .environmentObject(viewModel.returnFriendListViewModel(.simpleFriend))
+                .padding(.top)
             NavigationLink {
                 FriendListMiniView()
                     .environmentObject(viewModel.returnFriendListViewModel(.selectFriends))
             } label: {
-                Text("Add Friends")
+                ButtonLayoutView(text: "Add Friends")
             }
             Button {
                 viewModel.addHangOut()
                 dismiss()
             } label: {
-                Text("Create HangOut")
+                ButtonLayoutView(text: "Create HangOut")
             }
+            .padding(.bottom)
         }
     }
 }

@@ -18,18 +18,9 @@ struct AddButtonView: View {
     @EnvironmentObject var viewModel: AddButtonViewModel
 
     var body: some View {
-        ZStack {
-            NavigationView {
-                NavigationLink(destination: createDestinationView(for: creationType)) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(.red)
-                            .frame(height: 50)
-                            .padding(.horizontal, 30)
-                        Text("New \(creationType == .newFriend ? "Friend" : "HangOut")")
-                            .foregroundStyle(.white)
-                    }
-                }
+        NavigationView {
+            NavigationLink(destination: createDestinationView(for: creationType)) {
+                ButtonLayoutView(text: "New \(creationType == .newFriend ? "Friend" : "HangOut")")
             }
         }
     }

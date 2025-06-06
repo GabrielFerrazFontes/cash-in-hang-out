@@ -14,20 +14,24 @@ struct CreateHangView: View {
         NavigationView {
             VStack {
                 Spacer()
+                Spacer()
                 NavigationLink {
                     CreateEqualPriceView()
                         .environmentObject(viewModel.createEqualPriceViewModel())
                 } label: {
-                    Text("Dividir Igual")
+                    ButtonLayoutView(text: "Dividir Igual")
                 }
                 Spacer()
                 NavigationLink(destination: CreateDifferentPriceView()) {
-                    Text("Dividir Separado")
+                    ButtonLayoutView(text: "Dividir Separado")
                 }
+                .disabled(true)
                 Spacer()
                 NavigationLink(destination: CreatePizzaPriceView()) {
-                    Text("Dividir Pizza")
+                    ButtonLayoutView(text: "Dividir Pizza")
                 }
+                .disabled(true)
+                Spacer()
                 Spacer()
             }
         }
