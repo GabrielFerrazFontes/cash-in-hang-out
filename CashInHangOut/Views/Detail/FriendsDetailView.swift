@@ -19,6 +19,9 @@ struct FriendsDetailView: View {
                 .padding(.top)
                 .accessibilityLabel("Photo of a friend")
                 .accessibilityHint("Change the photo of your friend")
+                .onChange(of: friendPhoto) {
+                    viewModel.updatePhoto(friendPhoto)
+                }
             Text(viewModel.friendName)
                 .accessibilityLabel("Name")
                 .accessibilityHint("Name of a friend")

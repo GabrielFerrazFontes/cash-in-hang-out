@@ -35,6 +35,16 @@ extension FriendsDetailView {
             .init(hangOut: hangOut, viewContext: viewContext)
         }
 
+        func updatePhoto(_ data: Data?) {
+            friend.photo = data
+            do {
+                try viewContext.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+
         func colorType() -> Color {
             let value = friend.debt
             switch value {
