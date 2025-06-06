@@ -12,12 +12,12 @@ struct ButtonLayoutView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25)
-                .fill(.red)
-                .frame(height: 50)
-                .padding(.horizontal, 30)
+            RoundedRectangle(cornerRadius: DesignSystem.DSSize.buttonCornerRadius)
+                .fill(DesignSystem.DSColor.primary)
+                .frame(height: DesignSystem.DSSize.buttonHeight)
+                .padding(.horizontal, DesignSystem.DSSize.buttonPadding)
             Text(text)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.DSColor.secundary)
         }
     }
 }

@@ -38,7 +38,11 @@ struct CircularProfileImage: View {
             .frame(width: 200, height: 200)
             .clipShape(Circle())
             .background {
-                Circle().fill(LinearGradient(colors: [.blue, .red], startPoint: .top, endPoint: .bottom))
+                Circle().fill(LinearGradient(
+                    colors: [DesignSystem.DSColor.secundary, DesignSystem.DSColor.primary],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ))
             }
     }
 }
@@ -54,12 +58,12 @@ struct ProfileImage: View {
             ProgressView()
         case .empty:
             Image(systemName: "person.fill")
-                .font(.system(size: 40))
-                .foregroundColor(.white)
+                .font(.system(size: DesignSystem.DSSize.photoSize))
+                .foregroundColor(DesignSystem.DSColor.secundary)
         case .failure:
             Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 40))
-                .foregroundColor(.white)
+                .font(.system(size: DesignSystem.DSSize.photoSize))
+                .foregroundColor(DesignSystem.DSColor.secundary)
         }
     }
 }

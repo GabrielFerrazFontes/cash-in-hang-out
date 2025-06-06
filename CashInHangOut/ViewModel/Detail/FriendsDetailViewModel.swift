@@ -49,11 +49,11 @@ extension FriendsDetailView {
             let value = friend.debt
             switch value {
             case _ where value > 0:
-                return .red
+                return DesignSystem.DSColor.debtPositive
             case _ where value < 0:
-                return .green
+                return DesignSystem.DSColor.debtNegative
             default:
-                return .black
+                return DesignSystem.DSColor.debtNeutral
             }
         }
     }

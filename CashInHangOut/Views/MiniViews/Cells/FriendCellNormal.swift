@@ -29,15 +29,18 @@ struct FriendCellNormal: View {
 
     @ViewBuilder func createImage() -> some View {
         if viewModel.hasPhoto {
-            viewModel.createImage().resizable().scaledToFill().frame(width: 40, height: 40)
-                .frame(width: 40, height: 40)
+            viewModel.createImage().resizable().scaledToFill().frame(
+                width: DesignSystem.DSSize.photoSize,
+                height: DesignSystem.DSSize.photoSize
+            )
+                .frame(width: DesignSystem.DSSize.photoSize, height: DesignSystem.DSSize.photoSize)
                 .padding(.horizontal)
                 .clipShape(Circle())
                 .accessibilityLabel("Friend photo")
         } else {
             Image(systemName: "person.circle")
                 .foregroundColor(.blue)
-                .frame(width: 40, height: 40)
+                .frame(width: DesignSystem.DSSize.photoSize, height: DesignSystem.DSSize.photoSize)
                 .padding(.horizontal)
                 .accessibilityHidden(true)
         }
@@ -99,11 +102,11 @@ extension FriendCellNormal {
         func colorType() -> Color {
             switch friend.debt {
             case _ where friend.debt > 0:
-                .red
+                DesignSystem.DSColor.debtPositive
             case _ where friend.debt < 0:
-                .green
+                DesignSystem.DSColor.debtNegative
             default:
-                .black
+                DesignSystem.DSColor.debtNeutral
             }
         }
 

@@ -14,7 +14,7 @@ struct FriendsDetailView: View {
     var body: some View {
         VStack {
             PhotoPicker(imageData: $friendPhoto)
-                .padding(.horizontal, 100)
+                .padding(.horizontal, DesignSystem.DSSize.photoPicker)
                 .environmentObject(viewModel.createPhotoPickerViewModel())
                 .padding(.top)
                 .accessibilityLabel("Photo of a friend")

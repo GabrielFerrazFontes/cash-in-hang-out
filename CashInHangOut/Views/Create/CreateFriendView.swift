@@ -18,7 +18,7 @@ struct CreateFriendView: View {
     var body: some View {
         Form {
             PhotoPicker(imageData: $selectedImageData)
-                .padding(.horizontal, 100)
+                .padding(.horizontal, DesignSystem.DSSize.photoPicker)
                 .environmentObject(viewModel.createPhotoPickerViewModel(imageData: selectedImageData))
                 .accessibilityLabel("Photo of a friend")
                 .accessibilityHint("Add a photo of your friend")
