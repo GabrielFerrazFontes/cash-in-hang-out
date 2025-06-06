@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct FriendCellNormal: View {
     @EnvironmentObject var viewModel: FriendCellNormalViewModel
@@ -13,20 +14,41 @@ struct FriendCellNormal: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "person.circle")
-                .foregroundColor(.blue)
-                .frame(width: 32, height: 32)
-                .padding(.horizontal)
-            Text(viewModel.friendName)
-            Spacer()
-            moneyLabel()
+            createImage()
+            createMoneyIcon()
+                .padding(.leading)
+            VStack(alignment: .leading) {
+                Text(viewModel.friendName)
+                createMoneyLabel()
+            }
+            .padding(.leading)
         }
     }
 
-    @ViewBuilder func moneyLabel() -> some View {
+    @ViewBuilder func createImage() -> some View {
+        if viewModel.hasPhoto {
+            viewModel.createImage().resizable().scaledToFill().frame(width: 40, height: 40)
+                .frame(width: 40, height: 40)
+                .padding(.horizontal)
+                .clipShape(Circle())
+        } else {
+            Image(systemName: "person.circle")
+                .foregroundColor(.blue)
+                .frame(width: 40, height: 40)
+                .padding(.horizontal)
+        }
+    }
+
+    @ViewBuilder func createMoneyLabel() -> some View {
         if showMoneyLabel {
-            Label(viewModel.moneyLabel(), systemImage: viewModel.iconType())
-                .padding(.trailing)
+            Text(viewModel.moneyLabel())
+                .foregroundStyle(viewModel.colorType())
+        }
+    }
+
+    @ViewBuilder func createMoneyIcon() -> some View {
+        if showMoneyLabel {
+            Image(systemName: viewModel.iconType())
                 .foregroundStyle(viewModel.colorType())
         }
     }
@@ -38,10 +60,23 @@ extension FriendCellNormal {
         private var moneyDebt: Float?
 
         public var friendName: String { friend.name ?? "Unkonwn" }
+        public var hasPhoto: Bool { friend.photo != nil }
 
         init(friend: FetchedResults<Friend>.Element, moneyDebt: Float? = nil) {
             self.friend = friend
             self.moneyDebt = moneyDebt
+        }
+
+        func createImage() -> Image {
+            #if canImport(UIKit)
+                let uiImage = UIImage(data: friend.photo ?? Data()) ?? UIImage()
+                return Image(uiImage: uiImage)
+            #elseif canImport(AppKit)
+                let image = NSImage(data: friend.photo ?? Data()) ?? NSImage()
+                return Image(nsImage: image)
+            #else
+                return Image(systemName: "person.circle")
+            #endif
         }
 
         func iconType() -> String {

@@ -18,18 +18,22 @@ struct HangOutsListView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(hangOuts) { hangOut in
-                    NavigationLink {
-                        HangOutsDetailView()
-                            .environmentObject(viewModel.createDetailViewModel(hangOut: hangOut))
-                    } label: {
-                        HangOutCellNormal()
-                            .environmentObject(viewModel.createCellViewModel(hangOut: hangOut))
+                Section(header: Text("Hang Out List")) {
+                    ForEach(hangOuts) { hangOut in
+                        NavigationLink {
+                            HangOutsDetailView()
+                                .environmentObject(viewModel.createDetailViewModel(hangOut: hangOut))
+                        } label: {
+                            HangOutCellNormal()
+                                .environmentObject(viewModel.createCellViewModel(hangOut: hangOut))
+                        }
                     }
+                    .onDelete(perform: viewModel.removeHangOut)
                 }
-                .onDelete(perform: viewModel.removeHangOut)
+                .headerProminence(.increased)
             }
             .listStyle(GroupedListStyle())
+            .frame(maxHeight: .infinity)
         }
     }
 }
