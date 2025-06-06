@@ -19,6 +19,8 @@ struct FriendCellNormal: View {
                 .padding(.leading)
             VStack(alignment: .leading) {
                 Text(viewModel.friendName)
+                    .accessibilityLabel("Name")
+                    .accessibilityHint("Friends name")
                 createMoneyLabel()
             }
             .padding(.leading)
@@ -31,11 +33,13 @@ struct FriendCellNormal: View {
                 .frame(width: 40, height: 40)
                 .padding(.horizontal)
                 .clipShape(Circle())
+                .accessibilityLabel("Friend photo")
         } else {
             Image(systemName: "person.circle")
                 .foregroundColor(.blue)
                 .frame(width: 40, height: 40)
                 .padding(.horizontal)
+                .accessibilityHidden(true)
         }
     }
 
@@ -43,6 +47,8 @@ struct FriendCellNormal: View {
         if showMoneyLabel {
             Text(viewModel.moneyLabel())
                 .foregroundStyle(viewModel.colorType())
+                .accessibilityLabel("Money")
+                .accessibilityHint("how much money owes")
         }
     }
 

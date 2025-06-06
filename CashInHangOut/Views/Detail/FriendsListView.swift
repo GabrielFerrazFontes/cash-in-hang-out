@@ -39,6 +39,8 @@ struct FriendsListView: View {
                 AddButtonView(creationType: .newFriend)
                     .environmentObject(viewModel.createAddButtonAction())
                     .padding(.horizontal)
+                    .accessibilityLabel("Add")
+                    .accessibilityHint("Add a new friend")
             }
         }
     }

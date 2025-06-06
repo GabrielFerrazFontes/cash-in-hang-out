@@ -18,9 +18,13 @@ struct CreateEqualPriceView: View {
                 .disabled(viewModel.isDisabledTextField)
                 .padding([.horizontal, .top])
                 .font(.title2)
+                .accessibilityLabel("Total Price")
+                .accessibilityHint("Insert the total price of the hangout")
             Text("Each Person: \(viewModel.valueDivided, format: .currency(code: "BRL"))")
                 .padding([.horizontal, .top])
                 .font(.title2)
+                .accessibilityLabel("Price per person")
+                .accessibilityHint("The price each person will pay")
             FriendListMiniView()
                 .environmentObject(viewModel.returnFriendListViewModel(.simpleFriend))
                 .padding(.top)
@@ -29,13 +33,17 @@ struct CreateEqualPriceView: View {
                     .environmentObject(viewModel.returnFriendListViewModel(.selectFriends))
             } label: {
                 ButtonLayoutView(text: "Add Friends")
+                    .accessibilityLabel("Add Friends")
+                    .accessibilityHint("Add Friends to the hangout")
             }
             Button {
                 viewModel.addHangOut()
                 dismiss()
             } label: {
-                ButtonLayoutView(text: "Create HangOut")
+                ButtonLayoutView(text: "Create Hang Out")
             }
+            .accessibilityLabel("Create Hang Out")
+            .accessibilityHint("Create a new hangout")
             .padding(.bottom)
         }
     }

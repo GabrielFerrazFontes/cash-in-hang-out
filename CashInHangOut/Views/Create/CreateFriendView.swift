@@ -20,13 +20,19 @@ struct CreateFriendView: View {
             PhotoPicker(imageData: $selectedImageData)
                 .padding(.horizontal, 100)
                 .environmentObject(viewModel.createPhotoPickerViewModel(imageData: selectedImageData))
+                .accessibilityLabel("Photo of a friend")
+                .accessibilityHint("Add a photo of your friend")
             TextField("Enter Friend Name", text: $name)
+                .accessibilityLabel("Enter name of friend")
+                .accessibilityHint("This name will be used to identify your friend")
             Button {
                 viewModel.addFriend(name: name, photo: selectedImageData)
                 dismiss()
             } label : {
                 ButtonLayoutView(text: "Create New Friend")
             }
+            .accessibilityLabel("Create")
+            .accessibilityHint("Create a new friend")
         }
         Spacer()
     }

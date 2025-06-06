@@ -17,8 +17,14 @@ struct FriendsDetailView: View {
                 .padding(.horizontal, 100)
                 .environmentObject(viewModel.createPhotoPickerViewModel())
                 .padding(.top)
+                .accessibilityLabel("Photo of a friend")
+                .accessibilityHint("Change the photo of your friend")
             Text(viewModel.friendName)
+                .accessibilityLabel("Name")
+                .accessibilityHint("Name of a friend")
             Text(viewModel.friendDebt)
+                .accessibilityLabel("Debt")
+                .accessibilityHint("Debt of a friend")
                 .foregroundStyle(viewModel.colorType())
             NavigationStack {
                 List {

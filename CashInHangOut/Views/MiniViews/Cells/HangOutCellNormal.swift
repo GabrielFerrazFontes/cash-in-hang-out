@@ -13,7 +13,11 @@ struct HangOutCellNormal: View {
     var body: some View {
         HStack {
             Text(viewModel.hangOutDate)
+                .accessibilityLabel("Date")
+                .accessibilityHint("HangOut date")
             Text(viewModel.hangOutValue)
+                .accessibilityLabel("Price")
+                .accessibilityHint("HangOut price")
         }
     }
 }

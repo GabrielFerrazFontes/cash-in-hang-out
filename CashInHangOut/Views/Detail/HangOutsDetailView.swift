@@ -16,9 +16,13 @@ struct HangOutsDetailView: View {
             Text(viewModel.date)
                 .font(.title)
                 .padding(.top)
+                .accessibilityLabel("Date")
+                .accessibilityHint("Date of the hangout")
             Text(viewModel.totalValue)
                 .font(.largeTitle)
                 .padding(.top)
+                .accessibilityLabel("Total Value")
+                .accessibilityHint("total value of the hangout")
             List(viewModel.friendList, id: \.self, selection: $selectedFriends) { friend in
                 FriendCellNormal(showMoneyLabel: true)
                     .environmentObject(viewModel.createFriendCellViewModel(friend: friend))
@@ -30,6 +34,8 @@ struct HangOutsDetailView: View {
                 Button("Pay") {
                     viewModel.payFriendSelection(selectedFriends)
                 }
+                .accessibilityLabel("Pay")
+                .accessibilityHint("Edit button to set as paid by a friend")
             }
         }
     }
